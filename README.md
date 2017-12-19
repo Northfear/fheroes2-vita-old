@@ -16,11 +16,11 @@ FHeroes2 requires data files from the original Heroes of Might and Magic 2.
 
 Copy HEROES2.AGG and HEROES2X.AGG (if you own Price of Loyalty expansion) from the original games DATA folder to the ux0:data/fheroes2/data.
 
-GoG verios of the game is working nicely. Data files from demo version of the game should be working too.
+Data from GoG version of the game is working nicely. Files from the demo version should work too.
 
 Music files in OGG format should be placed into the ux0:data/fheroes2/files/music/ folder.
 
-In order to get music working with GoG release files, some file renaming is required (at least with my version of the game).
+In order to get music working with audio from GoG release, some file renaming is required (at least with my version of the game).
 
 - homm2_01.ogg -> 02 Battle (1).ogg
 - homm2_02.ogg -> 03 Battle (2).ogg
@@ -69,9 +69,9 @@ In order to get music working with GoG release files, some file renaming is requ
 You can download some custom map packs here: https://sourceforge.net/projects/libsdl-android/files/FreeHeroes2/
 
 ## Configuration
-If you want to change game options (like resolution, audio settings, movement speed or translations), copy fheroes2.cfg from ux0:app/FHOMM0002/ to the ux0:data/fheroes2 and edit it.
+If you want to change game options (like resolution, audio settings, movement speed or translation), copy fheroes2.cfg from ux0:app/FHOMM0002/ to the ux0:data/fheroes2 and edit it.
 
-960x544 resolution is supported, but performance isn't that good with it (especially during combat). So I had left 640x480 as the default one.
+960x544 resolution is supported, but performance isn't that good with it (especially during combat).
 
 ## Controls
 - Left analog stick - Pointer movement
@@ -79,7 +79,7 @@ If you want to change game options (like resolution, audio settings, movement sp
 - O button - Right mouse button
 - D-Pad - Map scrolling
 
-To change pointer movement speed edit fheroes2.cfg (copy it from ux0:app/FHOMM0002/ into the ux0:data/fheroes2/) file and change vita_pointer_speed variable.
+To change pointer movement speed edit fheroes2.cfg (copy it from ux0:app/FHOMM0002/ into the ux0:data/fheroes2/ first) file and change vita_pointer_speed variable.
 
 Touch controls are supported. To change touch control type or speed edit vita_touchcontrol_type and vita_touchcontrol_speed variables in fheroes2.cfg file.
 
