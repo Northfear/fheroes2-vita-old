@@ -1,0 +1,137 @@
+# makefile
+# project: Free Heroes2
+#
+
+TARGET := fheroes2
+
+ifdef WITH_SDL2
+SDL_LIBS := -L$(VITASDK)/arm-vita-eabi/lib -lSDL2 -lvita2d -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub -lSceTouch_stub -lm -lScePower_stub
+SDL_FLAGS := -I$(VITASDK)/arm-vita-eabi/include/SDL2 -D_REENTRANT
+else
+SDL_LIBS := -L$(VITASDK)/arm-vita-eabi/lib -lSDL -lvita2d -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub -lm -lScePower_stub
+SDL_FLAGS := -I$(VITASDK)/arm-vita-eabi/include/SDL -D_REENTRANT
+endif
+
+CFLAGS := $(CFLAGS) -Wall -fsigned-char -Wl,-q -I$(VITASDK)/arm-vita-eabi/include
+LDFLAGS := $(LDFLAGS) -L$(VITASDK)/arm-vita-eabi/lib -L$(VITASDK)/lib -Wl,-q
+LIBS :=
+
+ifdef VITA
+CFLAGS := $(CFLAGS) -DVITA
+endif
+
+ifdef DEBUG
+CFLAGS := $(CFLAGS) -O0 -g -pedantic -DWITH_DEBUG
+else
+CFLAGS := -O3 $(CFLAGS) -mcpu=cortex-a9 -mfloat-abi=hard -ffast-math -ftree-vectorize
+endif
+
+ifndef WITHOUT_MIXER
+CFLAGS := $(CFLAGS) -DWITH_MIXER
+ifdef WITH_SDL2
+SDL_LIBS := -lSDL2_mixer -lvorbisfile -lvorbis -logg $(SDL_LIBS)
+else
+SDL_LIBS := -lSDL_mixer -lvorbisfile -lvorbis -logg $(SDL_LIBS)
+endif
+endif
+
+ifndef WITHOUT_IMAGE
+CFLAGS := $(CFLAGS) -DWITH_IMAGE -DWITH_ZLIB
+ifdef WITH_SDL2
+SDL_LIBS := $(SDL_LIBS) -lSDL2_image -lz -lpng16 -ljpeg
+else
+SDL_LIBS := $(SDL_LIBS) -lSDL_image -lz -lpng16
+endif
+endif
+
+ifndef WITHOUT_UNICODE
+CFLAGS := $(CFLAGS) -DWITH_TTF
+ifdef WITH_SDL2
+SDL_LIBS := $(SDL_LIBS) -lSDL2_ttf -lfreetype -lpng16
+else
+SDL_LIBS := $(SDL_LIBS) -lSDL_ttf -lfreetype -lpng16
+endif
+endif
+
+#ifndef WITHOUT_NETWORK
+#CFLAGS := $(CFLAGS) -DWITH_NET_DISABLE
+#ifdef WITH_SDL2
+#SDL_LIBS := $(SDL_LIBS) -lSDL2_net
+#else
+#SDL_LIBS := $(SDL_LIBS) -lSDL_net
+#endif
+#endif
+
+ifdef NETWORK_ENABLE
+CFLAGS := $(CFLAGS) -DNETWORK_ENABLE
+ifdef WITH_SDL2
+SDL_LIBS := $(SDL_LIBS) -lSDL2_net
+else
+SDL_LIBS := $(SDL_LIBS) -lSDL_net
+endif
+endif
+
+ifndef WITHOUT_XML
+CFLAGS := $(CFLAGS) -DWITH_XML
+endif
+
+ifndef WITHOUT_ZLIB
+CFLAGS := $(CFLAGS) -DWITH_ZLIB
+LIBS := $(LIBS) -lz
+endif
+
+ifdef RELEASE
+CFLAGS := $(CFLAGS) -DBUILD_RELEASE
+endif
+
+CFLAGS := $(SDL_FLAGS) $(CFLAGS)
+LIBS := $(SDL_LIBS) $(LIBS)
+
+# platform specific flags
+ifndef PLATFORM
+ifndef OS
+OS := $(shell uname)
+endif
+
+ifeq ($(OS),Windows_NT)
+PLATFORM := mingw
+endif
+ifeq ($(OS),FreeBSD)
+PLATFORM := bsd
+endif
+ifeq ($(OS),Darwin)
+PLATFORM := osx
+endif
+ifeq ($(OS),Linux)
+PLATFORM := all
+endif
+ifeq ($(OS),Haiku)
+PLATFORM := all
+LIBS := -liconv
+endif
+endif
+
+include Makefile.$(PLATFORM)
+
+export CC CXX AR LINK WINDRES LDFLAGS CFLAGS LIBS PLATFORM
+
+.PHONY: clean
+
+all:
+ifndef WITHOUT_XML
+	$(MAKE) -C xmlccwrap
+endif
+	$(MAKE) -C engine
+	$(MAKE) -C dist
+ifdef WITH_TOOLS
+	$(MAKE) -C tools
+endif
+ifndef WITHOUT_UNICODE
+	$(MAKE) -C dist pot
+endif
+
+clean:
+	$(MAKE) -C xmlccwrap clean
+	$(MAKE) -C tools clean
+	$(MAKE) -C dist clean
+	$(MAKE) -C engine clean

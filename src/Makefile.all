@@ -1,0 +1,12 @@
+AR := $(VITASDK)/arm-vita-eabi/bin/ar
+
+#ifndef CXX
+CXX := arm-vita-eabi-g++
+#endif
+
+ifndef WITHOUT_UNICODE
+ifndef VITA
+CFLAGS := $(CFLAGS) -DWITH_ICONV
+endif
+#LIBS := $(LIBS) -lfreetype
+endif
