@@ -14,7 +14,7 @@ make -f Makefile.vita
 ## Original data
 FHeroes2 requires data files from the original Heroes of Might and Magic 2.
 
-Copy HEROES2.AGG and HEROES2X.AGG (if you own Price of Loyalty expansion) from the original games DATA folder to the ux0:data/fheroes2/data.
+Copy HEROES2.AGG and HEROES2X.AGG (if you own Price of Loyalty expansion) from the original games DATA folder to the ux0:data/fheroes2/data and everything from MAPS folder into the ux0:data/fheroes2/maps.
 
 Data from GoG version of the game is working nicely. Files from the demo version should work too.
 
