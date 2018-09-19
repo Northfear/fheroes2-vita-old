@@ -461,7 +461,7 @@ bool Settings::Read(const std::string & filename)
     if(config.Exists("vita_touchcontrol_type"))
     {
 	int vita_touchcontrol_type = config.IntParams("vita_touchcontrol_type");
-	if (vita_touchcontrol_type > 1) vita_touchcontrol_type = 1;
+	if (vita_touchcontrol_type > 2) vita_touchcontrol_type = 2;
         if (vita_touchcontrol_type < 0) vita_touchcontrol_type = 0;
         LocalEvent::Get().SetVitaTouchControlType(vita_touchcontrol_type);
     }
