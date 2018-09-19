@@ -492,8 +492,18 @@ void LocalEvent::HandleTouchEvent(const SDL_TouchFingerEvent & event)
     
     if (vita_touchcontrol_type == 1)
     {
-        xaxis_float = lerp(event.x, 1920, 960);
-        yaxis_float = lerp(event.y, 1080, 544);
+        int w = 960;
+        int h = 544;
+        
+        //fullscreen touch location fix
+        if (Display::Get().IsFullscreen())
+        {
+            w = Display::Get().w();
+            h = Display::Get().h();
+        }
+        
+        xaxis_float = lerp(event.x, 1920, w);
+        yaxis_float = lerp(event.y, 1080, h);
     }
     else if (vita_touchcontrol_type == 2)
     {

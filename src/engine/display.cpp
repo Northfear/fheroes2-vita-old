@@ -126,6 +126,13 @@ Size Display::GetSize(void) const
 #endif
 }
 
+#ifdef VITA
+bool Display::IsFullscreen(void)
+{
+    return SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN;
+}
+#endif
+
 void Display::Flip(void)
 {
 #ifdef VITA

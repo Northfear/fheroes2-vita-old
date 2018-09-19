@@ -48,6 +48,7 @@ public:
     void        ToggleFullScreen(void);
 #ifdef VITA
     void	VitaFlip(void);
+    bool        IsFullscreen(void);
 #endif
 
     void	Fade(int delay = 500);
