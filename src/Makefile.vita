@@ -5,7 +5,7 @@
 TARGET := fheroes2
 
 ifdef WITH_SDL2
-SDL_LIBS := -L$(VITASDK)/arm-vita-eabi/lib -lSDL2 -lvita2d -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub -lSceTouch_stub -lm -lScePower_stub
+SDL_LIBS := -L$(VITASDK)/arm-vita-eabi/lib -lSDL2 -lvita2d -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub -lSceTouch_stub -lm -lScePower_stub -lSceHid_stub
 SDL_FLAGS := -I$(VITASDK)/arm-vita-eabi/include/SDL2 -D_REENTRANT
 else
 SDL_LIBS := -L$(VITASDK)/arm-vita-eabi/lib -lSDL -lvita2d -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub -lm -lScePower_stub
@@ -18,6 +18,10 @@ LIBS :=
 
 ifdef VITA
 CFLAGS := $(CFLAGS) -DVITA
+endif
+
+ifdef CAMPAIGN
+CFLAGS := $(CFLAGS) -DCAMPAIGN
 endif
 
 ifdef DEBUG

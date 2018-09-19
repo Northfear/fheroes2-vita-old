@@ -453,8 +453,6 @@ bool LocalEvent::HandleEvents(bool delay)
 }
 
 #ifdef VITA
-#define lerp(value, from_max, to_max) ((((value*10) * (to_max*10))/(from_max*10))/10)
-
 Sint16 xaxis_value = 0;
 Sint16 yaxis_value = 0;
 float xaxis_float = 0;
@@ -482,8 +480,8 @@ void LocalEvent::HandleTouchEvent(const SDL_TouchFingerEvent & event)
         
     if (event.type == SDL_FINGERDOWN)
     {
-        xaxis_starting = lerp(event.x, 1920, 960);
-        yaxis_starting = lerp(event.y, 1080, 544);
+        xaxis_starting = event.x * (float)960;
+        yaxis_starting = event.y * (float)544;
         xcursor_starting = xaxis_float;
         ycursor_starting = yaxis_float;
     }
@@ -502,13 +500,13 @@ void LocalEvent::HandleTouchEvent(const SDL_TouchFingerEvent & event)
             h = Display::Get().h();
         }
         
-        xaxis_float = lerp(event.x, 1920, w);
-        yaxis_float = lerp(event.y, 1080, h);
+        xaxis_float = event.x * (float)w;
+        yaxis_float = event.y * (float)h;
     }
     else if (vita_touchcontrol_type == 2)
     {
-        float deltaX = (lerp(event.x, 1920, 960) - xaxis_starting) * (vita_touchcontrol_speed / 10.0f);
-        float deltaY = (lerp(event.y, 1080, 544) - yaxis_starting) * (vita_touchcontrol_speed / 10.0f);
+        float deltaX = ((event.x * (float)960) - xaxis_starting) * (vita_touchcontrol_speed / 10.0f);
+        float deltaY = ((event.y * (float)544) - yaxis_starting) * (vita_touchcontrol_speed / 10.0f);
         xaxis_float = xcursor_starting + deltaX;
         yaxis_float = ycursor_starting + deltaY;
     }
