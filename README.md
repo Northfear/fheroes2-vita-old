@@ -1,3 +1,9 @@
+This version is based on original fheroes2 project (that's currently inactive).
+
+New version of the port (that's based on the newer version of fheroes2) can be downloaded here
+
+https://github.com/Northfear/fheroes2-vita
+
 # FHeroes2 port for PS Vita
 ## Building
 ### Prerequisites
